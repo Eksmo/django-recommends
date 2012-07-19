@@ -11,8 +11,13 @@ try:
     from recommends.storages.redis.storage import RedisStorage
 except ImportError:
     RedisStorage = None
+try:
+    from recommends.tasks import recommends_precompute
+except ImportError:
+    recommends_precompute = None
 
-from recommends.tests.tests import RecommendsTestCase
+if recommends_precompute is not None:
+    from recommends.tests.tests import RecommendsTestCase
 from recommends.tests.models import  RecProduct, RecVote
 from django.db import models
 from django.contrib.sites.models import Site
@@ -67,7 +72,8 @@ class GhettoRecommendationProvider(RecommendationProvider):
 
 
 
-if RedisStorage is not None and getattr(settings, 'RECOMMENDS_TEST_REDIS', False):
+if recommends_precompute is not None and RedisStorage is not None\
+        and getattr(settings, 'RECOMMENDS_TEST_REDIS', False):
     class RedisRecommendationProvider(GhettoRecommendationProvider):
         storage = RedisStorage(settings=settings)
 
@@ -78,7 +84,8 @@ if RedisStorage is not None and getattr(settings, 'RECOMMENDS_TEST_REDIS', False
             super(RecommendsRedisStorageTestCase, self).setUp()
 
 
-if MongoStorage is not None and getattr(settings, 'RECOMMENDS_TEST_MONGO', False):
+if recommends_precompute is not None and MongoStorage is not None\
+        and getattr(settings, 'RECOMMENDS_TEST_MONGO', False):
     class MongoRecommendationProvider(GhettoRecommendationProvider):
         storage = MongoStorage(settings=settings)
 
