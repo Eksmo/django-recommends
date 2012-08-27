@@ -3,6 +3,11 @@
 Changelog
 =========
 
+* v0.0.10
+    * Added ``RecSysAlgorithm``.
+* v0.0.9
+    * Now tests can run in app's ./manage.py test. Thanks Andrii Kostenko.
+    * Added support for ignored user recommendation. Thanks Maxim Gurets.
 * v0.0.8
     * Added ``threshold_similarities`` and ``threshold_recommnedations`` to the storage backends.
 * v0.0.7
