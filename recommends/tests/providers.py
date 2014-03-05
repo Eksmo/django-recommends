@@ -22,6 +22,13 @@ try:
     from recommends.algorithms.pyrecsys import RecSysAlgorithm
 except ImportError:
     RecSysAlgorithm = None
+try:
+    from recommends.tasks import recommends_precompute
+except ImportError:
+    recommends_precompute = None
+
+if recommends_precompute is not None:
+    from recommends.tests.tests import RecommendsTestCase
 
 if recommends_precompute is not None:
     from recommends.tests.tests import RecommendsTestCase
@@ -29,6 +36,7 @@ from recommends.tests.models import  RecProduct, RecVote
 
 
 class ProductRecommendationProvider(RecommendationProvider):
+
     def get_users(self):
         return User.objects.filter(is_active=True, rec_votes__isnull=False).distinct()
 
@@ -50,10 +58,14 @@ class ProductRecommendationProvider(RecommendationProvider):
     def get_rating_item(self, rating):
         return rating.product
 
-recommendation_registry.register(RecVote, [RecProduct], ProductRecommendationProvider)
+recommendation_registry.register(
+    RecVote,
+    [RecProduct],
+    ProductRecommendationProvider)
 
 
 class GhettoRecommendationProvider(RecommendationProvider):
+
     def get_users(self):
         return User.objects.filter(is_active=True, rec_votes__isnull=False).distinct()
 
@@ -76,7 +88,7 @@ class GhettoRecommendationProvider(RecommendationProvider):
         return rating.product
 
 
-if RecSysAlgorithm is not None and getattr(settings, 'RECOMMENDS_TEST_RECSYS', False):
+if recommends_precompute is not None and RecSysAlgorithm is not None and getattr(settings, 'RECOMMENDS_TEST_RECSYS', False):
     class RecSysRecommendationProvider(ProductRecommendationProvider):
         algorithm = RecSysAlgorithm()
 
@@ -87,43 +99,95 @@ if RecSysAlgorithm is not None and getattr(settings, 'RECOMMENDS_TEST_RECSYS', F
         }
 
         def setUp(self):
-            recommendation_registry.unregister(RecVote, [RecProduct], ProductRecommendationProvider)
-            recommendation_registry.register(RecVote, [RecProduct], RecSysRecommendationProvider)
+            recommendation_registry.unregister(
+                RecVote,
+                [RecProduct],
+                ProductRecommendationProvider)
+            recommendation_registry.register(
+                RecVote,
+                [RecProduct],
+                RecSysRecommendationProvider)
             super(RecSysAlgoTestCase, self).setUp()
 
         def tearDown(self):
             super(RecSysAlgoTestCase, self).tearDown()
+<<<<<<< HEAD
             recommendation_registry.unregister(RecVote, [RecProduct], RecSysRecommendationProvider)
             recommendation_registry.register(RecVote, [RecProduct], ProductRecommendationProvider)
 
 if recommends_precompute is not None and RedisStorage is not None\
         and getattr(settings, 'RECOMMENDS_TEST_REDIS', False):
+=======
+            recommendation_registry.unregister(
+                RecVote,
+                [RecProduct],
+                RecSysRecommendationProvider)
+            recommendation_registry.register(
+                RecVote,
+                [RecProduct],
+                ProductRecommendationProvider)
+
+if recommends_precompute is not None and RedisStorage is not None and getattr(settings, 'RECOMMENDS_TEST_REDIS', False):
+>>>>>>> upstream/master
     class RedisRecommendationProvider(GhettoRecommendationProvider):
         storage = RedisStorage(settings=settings)
 
     class RecommendsRedisStorageTestCase(RecommendsTestCase):
+
         def setUp(self):
-            recommendation_registry.unregister(RecVote, [RecProduct], ProductRecommendationProvider)
-            recommendation_registry.register(RecVote, [RecProduct], RedisRecommendationProvider)
+            recommendation_registry.unregister(
+                RecVote,
+                [RecProduct],
+                ProductRecommendationProvider)
+            recommendation_registry.register(
+                RecVote,
+                [RecProduct],
+                RedisRecommendationProvider)
             super(RecommendsRedisStorageTestCase, self).setUp()
 
         def tearDown(self):
             super(RecommendsRedisStorageTestCase, self).tearDown()
+<<<<<<< HEAD
             recommendation_registry.unregister(RecVote, [RecProduct], RedisRecommendationProvider)
             recommendation_registry.register(RecVote, [RecProduct], ProductRecommendationProvider)
 
 if recommends_precompute is not None and MongoStorage is not None\
         and getattr(settings, 'RECOMMENDS_TEST_MONGO', False):
+=======
+            recommendation_registry.unregister(
+                RecVote,
+                [RecProduct],
+                RedisRecommendationProvider)
+            recommendation_registry.register(
+                RecVote,
+                [RecProduct],
+                ProductRecommendationProvider)
+
+if recommends_precompute is not None and MongoStorage is not None and getattr(settings, 'RECOMMENDS_TEST_MONGO', False):
+>>>>>>> upstream/master
     class MongoRecommendationProvider(GhettoRecommendationProvider):
         storage = MongoStorage(settings=settings)
 
     class RecommendsMongoStorageTestCase(RecommendsTestCase):
+
         def setUp(self):
-            recommendation_registry.unregister(RecVote, [RecProduct], ProductRecommendationProvider)
-            recommendation_registry.register(RecVote, [RecProduct], MongoRecommendationProvider)
+            recommendation_registry.unregister(
+                RecVote,
+                [RecProduct],
+                ProductRecommendationProvider)
+            recommendation_registry.register(
+                RecVote,
+                [RecProduct],
+                MongoRecommendationProvider)
             super(RecommendsMongoStorageTestCase, self).setUp()
 
         def tearDown(self):
             super(RecommendsMongoStorageTestCase, self).tearDown()
-            recommendation_registry.unregister(RecVote, [RecProduct], MongoRecommendationProvider)
-            recommendation_registry.register(RecVote, [RecProduct], ProductRecommendationProvider)
+            recommendation_registry.unregister(
+                RecVote,
+                [RecProduct],
+                MongoRecommendationProvider)
+            recommendation_registry.register(
+                RecVote,
+                [RecProduct],
+                ProductRecommendationProvider)

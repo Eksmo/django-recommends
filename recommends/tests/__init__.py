@@ -1,2 +1,2 @@
-#from recommends.tests.tests import *
+# flake8: noqa
 from recommends.tests.providers import *

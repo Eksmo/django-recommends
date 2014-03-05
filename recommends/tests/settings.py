@@ -70,7 +70,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -80,7 +80,7 @@ SECRET_KEY = '91tj&kv4c5(8f1t_@c0hs-%bkp7r4e*bmjet3ph=8-6iw#v7kq'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -91,7 +91,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'example_project.urls'
+ROOT_URLCONF = 'recommends.tests.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -110,7 +110,7 @@ INSTALLED_APPS = (
 
     'recommends',
     'recommends.storages.djangoorm',
-    'example_app',
+    'recommends.tests',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'djcelery',
@@ -149,8 +149,23 @@ CACHES = {
 }
 
 CELERY_ALWAYS_EAGER = True
+ALLOWED_HOSTS = ['*']
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+BROKER_URL = 'redis://localhost:6379/0'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': ':memory:',
+        # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',
+        # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+RECOMMENDS_TEST_RECSYS = True

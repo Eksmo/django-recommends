@@ -1,8 +1,5 @@
 from celery import task
-from celery.schedules import crontab
 from .utils import filelock
-
-from .settings import RECOMMENDS_TASK_RUN, RECOMMENDS_TASK_CRONTAB
 
 
 @task(name='recommends_precompute')
@@ -23,7 +20,8 @@ def remove_suggestions(rated_model, object_id):
     from recommends.providers import recommendation_registry
 
     ObjectClass = get_model(*rated_model.split('.'))
-    provider_instance = recommendation_registry.get_provider_for_content(ObjectClass)
+    provider_instance = recommendation_registry.get_provider_for_content(
+        ObjectClass)
     obj = ObjectClass.objects.get(pk=object_id)
 
     provider_instance.storage.remove_recommendations(obj)
@@ -35,7 +33,8 @@ def remove_similarities(rated_model, object_id):
     from recommends.providers import recommendation_registry
 
     ObjectClass = get_model(*rated_model.split('.'))
-    provider_instance = recommendation_registry.get_provider_for_content(ObjectClass)
+    provider_instance = recommendation_registry.get_provider_for_content(
+        ObjectClass)
     obj = ObjectClass.objects.get(pk=object_id)
 
     provider_instance.storage.remove_similarities(obj)

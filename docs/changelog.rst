@@ -2,7 +2,24 @@
 
 Changelog
 =========
-
+* v0.0.16
+    * renamed ``--verbose`` option to ``--verbosity``.
+    * The ``recommends_precompute`` method is available even with ``RECOMMENDS_TASK_RUN = False``.
+* v0.0.15
+    * added ``--verbose`` option to ``recommends_precompute`` command.
+* v0.0.14
+    * more verbose ``recommends_precompute`` command. Thanks WANG GAOXIANG.
+    * Introduced ``raw_id` parameter for lighter queries. WANG GAOXIANG.
+    * Introduced ``RECOMMENDS_STORAGE_MONGODB_FSYNC`` setting.
+* v0.0.13
+    * Use ``{}`` instead of ``dict()`` for better performance.
+* v0.0.12
+    * python 3.3 and Django 1.5 compatibility
+* v0.0.11
+    * ``get_rating_site`` provider method now defaults to ``settings.SITE_ID`` instead of ``None``.
+    * ``similarities`` templatetag result is now cached per object
+    * fixed tests if ``recommends_precompute`` is None.
+    * explicitly named celery tasks.
 * v0.0.10
     * Added ``RecSysAlgorithm``.
 * v0.0.9
