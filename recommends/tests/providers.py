@@ -111,13 +111,6 @@ if recommends_precompute is not None and RecSysAlgorithm is not None and getattr
 
         def tearDown(self):
             super(RecSysAlgoTestCase, self).tearDown()
-<<<<<<< HEAD
-            recommendation_registry.unregister(RecVote, [RecProduct], RecSysRecommendationProvider)
-            recommendation_registry.register(RecVote, [RecProduct], ProductRecommendationProvider)
-
-if recommends_precompute is not None and RedisStorage is not None\
-        and getattr(settings, 'RECOMMENDS_TEST_REDIS', False):
-=======
             recommendation_registry.unregister(
                 RecVote,
                 [RecProduct],
@@ -128,7 +121,6 @@ if recommends_precompute is not None and RedisStorage is not None\
                 ProductRecommendationProvider)
 
 if recommends_precompute is not None and RedisStorage is not None and getattr(settings, 'RECOMMENDS_TEST_REDIS', False):
->>>>>>> upstream/master
     class RedisRecommendationProvider(GhettoRecommendationProvider):
         storage = RedisStorage(settings=settings)
 
@@ -147,13 +139,6 @@ if recommends_precompute is not None and RedisStorage is not None and getattr(se
 
         def tearDown(self):
             super(RecommendsRedisStorageTestCase, self).tearDown()
-<<<<<<< HEAD
-            recommendation_registry.unregister(RecVote, [RecProduct], RedisRecommendationProvider)
-            recommendation_registry.register(RecVote, [RecProduct], ProductRecommendationProvider)
-
-if recommends_precompute is not None and MongoStorage is not None\
-        and getattr(settings, 'RECOMMENDS_TEST_MONGO', False):
-=======
             recommendation_registry.unregister(
                 RecVote,
                 [RecProduct],
@@ -164,7 +149,6 @@ if recommends_precompute is not None and MongoStorage is not None\
                 ProductRecommendationProvider)
 
 if recommends_precompute is not None and MongoStorage is not None and getattr(settings, 'RECOMMENDS_TEST_MONGO', False):
->>>>>>> upstream/master
     class MongoRecommendationProvider(GhettoRecommendationProvider):
         storage = MongoStorage(settings=settings)
 
