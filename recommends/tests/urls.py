@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView, DetailView
+from eksmo.urls import urlpatterns as eksmo_urlpatterns
 from .models import RecProduct
 
 
@@ -27,3 +28,5 @@ urlpatterns = patterns('',
                        url(r'^$', TemplateView.as_view(
                            template_name='home.html'), name='home'),
                        )
+
+urlpatterns += eksmo_urlpatterns
