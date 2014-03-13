@@ -21,10 +21,10 @@ if recommends_precompute is not None:
             os.path.join(os.path.dirname(__file__), 'templates'),
             ),
         TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',),
-        USE_TZ=False, )
+        USE_TZ=False,
+        ROOT_URLCONF='recommends.tests.urls', )
     class RecommendsTestCase(TestCase):
         fixtures = ['products.json']
-        urls = 'recommends.tests.urls'
     
         def setUp(self):
             self.client = Client()
@@ -42,8 +42,6 @@ if recommends_precompute is not None:
         def tearDown(self):
             from django.template import loader
             loader.template_source_loaders = None
-            from django.conf import settings
-            settings.ROOT_URLCONF = 'eksmo.urls'
             super(RecommendsTestCase, self).tearDown()
     
         def test_similarities(self):
@@ -142,10 +140,10 @@ if recommends_precompute is not None:
     TEMPLATE_DIRS=(
         os.path.join(os.path.dirname(__file__), 'templates'),),
     TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',),
-    USE_TZ=False, )
+    USE_TZ=False,
+    ROOT_URLCONF='recommends.tests.urls', )
 class RecommendsTestCase(TestCase):
     fixtures = ['products.json']
-    urls = 'recommends.tests.urls'
 
     results = {
         'len_recommended': 2,
@@ -169,8 +167,6 @@ class RecommendsTestCase(TestCase):
     def tearDown(self):
         from django.template import loader
         loader.template_source_loaders = None
-        from django.conf import settings
-        settings.ROOT_URLCONF = 'eksmo.urls'
         super(RecommendsTestCase, self).tearDown()
 
     def isObjectWithIdExists(self, object_id):
