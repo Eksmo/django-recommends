@@ -42,6 +42,8 @@ if recommends_precompute is not None:
         def tearDown(self):
             from django.template import loader
             loader.template_source_loaders = None
+            from django.conf import settings
+            settings.ROOT_URLCONF = 'eksmo.urls'
             super(RecommendsTestCase, self).tearDown()
     
         def test_similarities(self):
@@ -167,6 +169,8 @@ class RecommendsTestCase(TestCase):
     def tearDown(self):
         from django.template import loader
         loader.template_source_loaders = None
+        from django.conf import settings
+        settings.ROOT_URLCONF = 'eksmo.urls'
         super(RecommendsTestCase, self).tearDown()
 
     def isObjectWithIdExists(self, object_id):
